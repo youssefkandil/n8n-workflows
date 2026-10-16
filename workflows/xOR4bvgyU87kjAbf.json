@@ -1,0 +1,316 @@
+{
+  "updatedAt": "2026-09-15T20:35:46.427Z",
+  "createdAt": "2026-09-15T15:31:51.912Z",
+  "id": "xOR4bvgyU87kjAbf",
+  "name": "عقار",
+  "description": null,
+  "active": false,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.5,
+      "position": [
+        -736,
+        256
+      ],
+      "id": "89dc1df3-fb66-4412-b5da-9b88bb023f1d",
+      "name": "Telegram Trigger",
+      "webhookId": "36ad2551-008c-45e2-a283-4edb65cbae56",
+      "credentials": {
+        "telegramApi": {
+          "id": "Myj3YxWFSZI8jpWU",
+          "name": "FirstAiAgent"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $json.message.from.id }}",
+        "contextWindowLength": 15
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.4,
+      "position": [
+        -208,
+        432
+      ],
+      "id": "c1f04059-2f11-4bc1-8df5-0a40111cae83",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.from.id }}",
+        "text": "={{ $json.output }}",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -64,
+        192
+      ],
+      "id": "8be1cb58-7cd7-48d8-89e6-60326f671afe",
+      "name": "Send a text message",
+      "webhookId": "129d3129-c867-46cf-aeed-8a7afb0921c9",
+      "credentials": {
+        "telegramApi": {
+          "id": "Myj3YxWFSZI8jpWU",
+          "name": "FirstAiAgent"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "openrouter/free",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        -512,
+        448
+      ],
+      "id": "0bace341-f9ed-4ccf-bcc4-dbc878d2a060",
+      "name": "OpenRouter Chat Model",
+      "credentials": {
+        "openRouterApi": {
+          "id": "MeaQ6478TRtZgXzD",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1btTJCjFT_HJU1T9JgEFstp3jXnmDgVk5NneN4R_8cxo",
+          "mode": "list",
+          "cachedResultName": "عقار",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1btTJCjFT_HJU1T9JgEFstp3jXnmDgVk5NneN4R_8cxo/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1btTJCjFT_HJU1T9JgEFstp3jXnmDgVk5NneN4R_8cxo/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Timestamp": "={{ $now }}",
+            "Lead ID": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+            "Property Type": "={{ JSON.parse($json.output).output.property_type }}",
+            "Buy or Rent": "={{ JSON.parse($json.output).output.buy_or_rent }}",
+            "New or Resale": "={{ JSON.parse($json.output).output.new_or_resale }}",
+            "First Property Purchase": "={{ JSON.parse($json.output).output.first_property_purchase }}",
+            "Timeline": "={{ JSON.parse($json.output).output.timeline }}",
+            "Budget Range": "={{ JSON.parse($json.output).output.budget_range }}",
+            "Score": "={{ JSON.parse($json.output).output.score }}",
+            "Qualification": "={{ JSON.parse($json.output).output.qualification }}",
+            "Confirmed": "={{ JSON.parse($json.output).output.confirmed }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Timestamp",
+              "displayName": "Timestamp",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Lead ID",
+              "displayName": "Lead ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Property Type",
+              "displayName": "Property Type",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Buy or Rent",
+              "displayName": "Buy or Rent",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "New or Resale",
+              "displayName": "New or Resale",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "First Property Purchase",
+              "displayName": "First Property Purchase",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Timeline",
+              "displayName": "Timeline",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Budget Range",
+              "displayName": "Budget Range",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Score",
+              "displayName": "Score",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Qualification",
+              "displayName": "Qualification",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Confirmed",
+              "displayName": "Confirmed",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.7,
+      "position": [
+        -320,
+        464
+      ],
+      "id": "da10bd30-2278-465f-ba01-eb89838ce089",
+      "name": "Append row in sheet in Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "P5Y1162j3UJ8KQFb",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        []
+      ]
+    },
+    "OpenRouter Chat Model": {
+      "ai_languageModel": [
+        []
+      ]
+    },
+    "Append row in sheet in Google Sheets": {
+      "ai_tool": [
+        []
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "nodeGroups": [],
+  "pinData": {},
+  "versionId": "62d10d7e-a721-4411-af30-fff71a81fc30",
+  "activeVersionId": null,
+  "versionCounter": 160,
+  "triggerCount": 0,
+  "sourceWorkflowId": null,
+  "tags": [],
+  "shared": [
+    {
+      "updatedAt": "2026-09-15T15:31:51.918Z",
+      "createdAt": "2026-09-15T15:31:51.918Z",
+      "role": "workflow:owner",
+      "workflowId": "xOR4bvgyU87kjAbf",
+      "projectId": "yD9Q2XWwnbezUeaJ",
+      "project": {
+        "updatedAt": "2026-09-04T11:12:03.759Z",
+        "createdAt": "2026-09-02T17:48:42.979Z",
+        "id": "yD9Q2XWwnbezUeaJ",
+        "name": "Youssef Kandil <youssefkandilmain@gmail.com>",
+        "type": "personal",
+        "icon": null,
+        "description": null,
+        "customTelemetryTags": [],
+        "creatorId": "62866307-32a1-4aed-bd25-6f4705f7df05"
+      }
+    }
+  ],
+  "versionMetadata": {
+    "name": null,
+    "description": null
+  }
+}

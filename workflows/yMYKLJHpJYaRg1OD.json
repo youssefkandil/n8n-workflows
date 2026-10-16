@@ -1,0 +1,210 @@
+{
+  "updatedAt": "2026-09-22T17:56:05.500Z",
+  "createdAt": "2026-09-22T13:11:36.439Z",
+  "id": "yMYKLJHpJYaRg1OD",
+  "name": "My workflow",
+  "description": null,
+  "active": false,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "evotest",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -368,
+        -32
+      ],
+      "id": "e4b7f69d-9f34-4fa5-ae91-477680335ee0",
+      "name": "Webhook",
+      "webhookId": "b5031f18-c317-4e20-a858-7f626ecd6504"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.body.data.message.conversation }}",
+        "options": {
+          "systemMessage": "You are a WhatsApp assistant replying on behalf of the business account. Rules:\n- If the user writes in Arabic, reply in Arabic. If they write in English, reply in English.\n- Keep replies short, natural, and appropriate for a WhatsApp chat (no long essays, no markdown formatting).\n- Never invent facts. Only answer using information you actually have; if you don't know something, say so plainly.\n- Output plain text only, ready to be sent directly as a WhatsApp message."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        -128,
+        -96
+      ],
+      "id": "ac8a3026-803f-4578-9a8f-097c2b206661",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": "openrouter/free",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        -128,
+        96
+      ],
+      "id": "fb2ecc8c-d2a1-4c5d-a394-8e62559fb64f",
+      "name": "OpenRouter Chat Model",
+      "credentials": {
+        "openRouterApi": {
+          "id": "MeaQ6478TRtZgXzD",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "number",
+              "value": "={{ $('Webhook').item.json.body.data.key.remoteJid }}"
+            },
+            {
+              "name": "text",
+              "value": "={{ $json.output }}"
+            }
+          ]
+        },
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "content-type",
+              "value": "application/json"
+            },
+            {
+              "name": "apikey",
+              "value": "my-secret-key"
+            }
+          ]
+        },
+        "options": {},
+        "sendBody": true,
+        "sendHeaders": true,
+        "specifyBody": "keypair",
+        "url": "http://host.docker.internal:8080/message/sendText/Whatsapp"
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        384,
+        -32
+      ],
+      "id": "27680845-00bc-403b-b85c-4ec1fc46065f",
+      "name": "HTTP Request"
+    },
+    {
+      "id": "4ed4c98b-7a36-4f2f-9acd-b05aff4ce8a5",
+      "name": "Simple Memory",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.4,
+      "position": [
+        32,
+        96
+      ],
+      "parameters": {
+        "contextWindowLength": 20,
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('Webhook').item.json.body.data.key.remoteJid }}"
+      },
+      "disabled": false
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": true
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "aiBuilderAssisted": true,
+    "builderVariant": "mcp"
+  },
+  "nodeGroups": [],
+  "pinData": {},
+  "versionId": "16da123a-9b9f-4d67-a48f-0aaa8edac6b8",
+  "activeVersionId": null,
+  "versionCounter": 75,
+  "triggerCount": 0,
+  "sourceWorkflowId": null,
+  "tags": [],
+  "shared": [
+    {
+      "updatedAt": "2026-09-22T13:11:36.443Z",
+      "createdAt": "2026-09-22T13:11:36.443Z",
+      "role": "workflow:owner",
+      "workflowId": "yMYKLJHpJYaRg1OD",
+      "projectId": "yD9Q2XWwnbezUeaJ",
+      "project": {
+        "updatedAt": "2026-09-04T11:12:03.759Z",
+        "createdAt": "2026-09-02T17:48:42.979Z",
+        "id": "yD9Q2XWwnbezUeaJ",
+        "name": "Youssef Kandil <youssefkandilmain@gmail.com>",
+        "type": "personal",
+        "icon": null,
+        "description": null,
+        "customTelemetryTags": [],
+        "creatorId": "62866307-32a1-4aed-bd25-6f4705f7df05"
+      }
+    }
+  ],
+  "versionMetadata": {
+    "name": "Restore Simple Memory node",
+    "description": "Restore the Simple Memory node that was accidentally dropped in the previous update, and clean up the HTTP Request node's stale jsonBody field now that it uses keypair body parameters."
+  }
+}

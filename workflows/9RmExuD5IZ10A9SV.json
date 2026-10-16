@@ -1,0 +1,190 @@
+{
+  "updatedAt": "2026-09-11T20:17:46.289Z",
+  "createdAt": "2026-09-11T19:35:52.986Z",
+  "id": "9RmExuD5IZ10A9SV",
+  "name": "Chat Bot Orders",
+  "description": null,
+  "active": false,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.5,
+      "position": [
+        -304,
+        -16
+      ],
+      "id": "dd6075b1-f42d-4752-97df-8a5c6e041d7f",
+      "name": "Telegram Trigger",
+      "webhookId": "2faba27b-c53f-4fc5-a095-ecca1ab1e1e8",
+      "credentials": {
+        "telegramApi": {
+          "id": "wZuCdRqrNgCFjE9W",
+          "name": "Salt3 Orders"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "hasOutputParser": true,
+        "messages": {
+          "messageValues": [
+            {
+              "message": "=You are the official restaurant ordering assistant for \"عم قنديل للمشويات\".\n\nYour job is to help customers understand the menu, choose suitable items, ask about prices, ingredients, additions, and help them build their order.\n\nYou must ONLY use the menu information provided below. Do not invent any food items, prices, ingredients, offers, discounts, delivery fees, or restaurant information that is not provided.\n\n## Restaurant\nName: عم قنديل للمشويات\n\n## Menu\n\n### Main Items\n\n1. كفتة سيخ\nPrice: 40 EGP\n\n2. كفتة\nPrice: 35 EGP\n\n3. كبدة\nPrice: 35 EGP\n\n4. طرب\nPrice: 60 EGP\n\n5. حواوشي سجق جبنة\nPrice: 60 EGP\n\n6. شيش جبنة\nPrice: 60 EGP\n\n7. مشوي صدور\nPrice: 40 EGP\n\n### Additions\n\n1. جبنة\nPrice: 5 EGP\n\n2. مكس جبن\nPrice: 10 EGP\n\n3. سلطة\nPrice: 10 EGP\n\n4. طحينة\nPrice: 5 EGP\n\n## Your Responsibilities\n\n- Answer customers' questions about the menu clearly and accurately.\n- Tell the customer the exact price when they ask about an item.\n- Help customers choose between menu items based on what they ask for.\n- If the customer asks for something that is not on the menu, clearly tell them that it is not listed on the current menu.\n- Do not make up ingredients or descriptions that are not provided.\n- If the customer asks about an addition, explain its price.\n- If the customer wants to order multiple items, calculate the total price correctly.\n- If the customer changes their order, recalculate the total.\n- If the customer asks for recommendations, recommend only items from the available menu.\n- Be friendly, natural, concise, and helpful.\n- Do not pressure the customer to order.\n- Do not repeatedly list the entire menu unless the customer asks for it.\n- Respond in Egyptian Arabic when the customer speaks Arabic.\n- If the customer speaks English, respond in simple English.\n- Keep responses short and suitable for a restaurant chat.\n\n## Order Handling\n\nWhen the customer clearly decides what they want, confirm the order in a simple format:\n\nالطلب:\n- [item] × [quantity] = [price]\n- [addition] × [quantity] = [price]\n\nالإجمالي: [total] جنيه\n\nIf the quantity is not specified, ask the customer how many they want instead of assuming.\n\nIf the customer mentions an item but does not clearly say they want to order it, treat it as a question rather than an order.\n\n## Important Rules\n\n1. Never invent menu items.\n2. Never change menu prices.\n3. Never invent ingredients.\n4. Never claim that an item is available if it is not in the menu.\n5. Never invent delivery information.\n6. Never invent restaurant opening hours.\n7. Never invent offers or discounts.\n8. Never pressure the customer to buy.\n9. If information is unavailable, say:\n\"المعلومة دي مش موجودة عندي حالياً.\"\n\n## Examples\n\nCustomer:\n\"الكفتة بكام؟\"\n\nAssistant:\n\"الكفتة بـ 35 جنيه.\"\n\nCustomer:\n\"ايه أرخص حاجة عندكم؟\"\n\nAssistant:\n\"أرخص الأصناف عندنا الكفتة والكبدة، كل واحد بـ 35 جنيه.\"\n\nCustomer:\n\"عايز كفتة وطرب\"\n\nAssistant:\n\"تمام، كفتة بـ 35 جنيه + طرب بـ 60 جنيه.\nالإجمالي: 95 جنيه.\"\n\nCustomer:\n\"عايز 2 كفتة و3 كبدة وطحينة\"\n\nAssistant:\n\"تمام، بس محتاج أعرف عدد الطحينة كام؟\"\n\nCustomer:\n\"عندكم فراخ؟\"\n\nAssistant:\n\"الموجود عندي في المنيو هو مشوي صدور بـ 40 جنيه.\"\n\nCustomer:\n\"اعملّي أرخص وجبة\"\n\nAssistant:\n\"ممكن كفتة بـ 35 جنيه + طحينة بـ 5 جنيه.\nالإجمالي: 40 جنيه.\"\n\n## Tone\n\nBe like a real Egyptian restaurant employee:\n- Friendly\n- Helpful\n- Short\n- Natural\n- Professional but not formal\n- Use Egyptian Arabic naturally\n\nDo not mention that you are an AI unless the customer specifically asks."
+            }
+          ]
+        },
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.9,
+      "position": [
+        -80,
+        -16
+      ],
+      "id": "a82068e2-8896-4b65-a80a-b5ff06f3e299",
+      "name": "Basic LLM Chain"
+    },
+    {
+      "parameters": {
+        "model": "google/gemma-4-31b-it:free",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        -80,
+        176
+      ],
+      "id": "7fda14cf-e916-4e89-b43b-407f8aa83a41",
+      "name": "OpenRouter Chat Model",
+      "credentials": {
+        "openRouterApi": {
+          "id": "MeaQ6478TRtZgXzD",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"message\": {\n      \"type\": \"string\",\n      \"description\": \"The natural language response that will be sent to the customer\"\n    },\n    \"is_order\": {\n      \"type\": \"boolean\",\n      \"description\": \"True if the customer is placing or confirming an order\"\n    },\n    \"items\": {\n      \"type\": \"array\",\n      \"description\": \"List of food items selected by the customer\",\n      \"items\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"name\": {\n            \"type\": \"string\",\n            \"description\": \"Name of the selected menu item\"\n          },\n          \"quantity\": {\n            \"type\": \"integer\",\n            \"description\": \"Quantity of the selected item\"\n          },\n          \"unit_price\": {\n            \"type\": \"number\",\n            \"description\": \"Price of one unit of the selected item in EGP\"\n          },\n          \"total_price\": {\n            \"type\": \"number\",\n            \"description\": \"Total price for this item based on quantity\"\n          }\n        },\n        \"required\": [\n          \"name\",\n          \"quantity\",\n          \"unit_price\",\n          \"total_price\"\n        ]\n      }\n    },\n    \"additions\": {\n      \"type\": \"array\",\n      \"description\": \"List of additions selected by the customer\",\n      \"items\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"name\": {\n            \"type\": \"string\",\n            \"description\": \"Name of the selected addition\"\n          },\n          \"quantity\": {\n            \"type\": \"integer\",\n            \"description\": \"Quantity of the addition\"\n          },\n          \"unit_price\": {\n            \"type\": \"number\",\n            \"description\": \"Price of one addition in EGP\"\n          },\n          \"total_price\": {\n            \"type\": \"number\",\n            \"description\": \"Total price for this addition\"\n          }\n        },\n        \"required\": [\n          \"name\",\n          \"quantity\",\n          \"unit_price\",\n          \"total_price\"\n        ]\n      }\n    },\n    \"total\": {\n      \"type\": \"number\",\n      \"description\": \"Total order price in EGP\"\n    }\n  },\n  \"required\": [\n    \"message\",\n    \"is_order\",\n    \"items\",\n    \"additions\",\n    \"total\"\n  ]\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        64,
+        192
+      ],
+      "id": "cf465421-1938-4f42-9d8b-a3d48ded13b3",
+      "name": "Structured Output Parser"
+    },
+    {
+      "parameters": {
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        288,
+        0
+      ],
+      "id": "549ab69a-7567-4150-bd5d-4de4fe2ab476",
+      "name": "Send a text message",
+      "webhookId": "92713852-52cd-4cba-905b-a2f943c0ae21",
+      "credentials": {
+        "telegramApi": {
+          "id": "wZuCdRqrNgCFjE9W",
+          "name": "Salt3 Orders"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "nodeGroups": [],
+  "pinData": {},
+  "versionId": "eeb97472-89c9-4f58-9264-e9cfa1aba2d4",
+  "activeVersionId": null,
+  "versionCounter": 20,
+  "triggerCount": 0,
+  "sourceWorkflowId": null,
+  "tags": [],
+  "shared": [
+    {
+      "updatedAt": "2026-09-11T19:35:52.994Z",
+      "createdAt": "2026-09-11T19:35:52.994Z",
+      "role": "workflow:owner",
+      "workflowId": "9RmExuD5IZ10A9SV",
+      "projectId": "yD9Q2XWwnbezUeaJ",
+      "project": {
+        "updatedAt": "2026-09-04T11:12:03.759Z",
+        "createdAt": "2026-09-02T17:48:42.979Z",
+        "id": "yD9Q2XWwnbezUeaJ",
+        "name": "Youssef Kandil <youssefkandilmain@gmail.com>",
+        "type": "personal",
+        "icon": null,
+        "description": null,
+        "customTelemetryTags": [],
+        "creatorId": "62866307-32a1-4aed-bd25-6f4705f7df05"
+      }
+    }
+  ],
+  "versionMetadata": {
+    "name": null,
+    "description": null
+  }
+}

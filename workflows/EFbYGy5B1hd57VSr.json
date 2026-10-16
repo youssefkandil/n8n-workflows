@@ -1,0 +1,214 @@
+{
+  "updatedAt": "2026-09-22T12:40:38.576Z",
+  "createdAt": "2026-09-22T12:18:36.697Z",
+  "id": "EFbYGy5B1hd57VSr",
+  "name": "RAG AI Agent - V1",
+  "description": null,
+  "active": false,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        -304,
+        -64
+      ],
+      "id": "cfd96243-f85c-4918-ac6f-31061b84dc5d",
+      "name": "When chat message received",
+      "webhookId": "2b7c2fa8-28ef-4897-9173-49d5a6d53b84"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "You are a CV Assistant.\n\nYour job is to answer questions about the candidate based ONLY on the information available in the provided CV Knowledge Base.\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        0,
+        -128
+      ],
+      "id": "44288dc5-5f2e-469f-b695-4141b679988c",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.4,
+      "position": [
+        48,
+        80
+      ],
+      "id": "a8f5c95f-91d7-418a-9bef-877b273da3e4",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "mode": "retrieve-as-tool",
+        "toolDescription": "CV knowledge base tool",
+        "tableName": {
+          "__rl": true,
+          "value": "documents2",
+          "mode": "list",
+          "cachedResultName": "documents2"
+        },
+        "options": {
+          "queryName": "match_documents"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreSupabase",
+      "typeVersion": 1.3,
+      "position": [
+        320,
+        32
+      ],
+      "id": "08cb22b1-8f39-4d93-9149-fa53571f9a1d",
+      "name": "Supabase Vector Store",
+      "credentials": {
+        "supabaseApi": {
+          "id": "kjw8U9Qy0yB0uMUK",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.embeddingsGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        240,
+        176
+      ],
+      "id": "e33d86b5-37fa-40b9-ba3a-f51cbaf121f4",
+      "name": "Embeddings Google Gemini",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "3QOBHCVsqcbtbD64",
+          "name": "Google Gemini(PaLM) Api account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "openrouter/free",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        -144,
+        80
+      ],
+      "id": "3de778cd-a9fe-43bd-98c3-030d929ab875",
+      "name": "OpenRouter Chat Model",
+      "credentials": {
+        "openRouterApi": {
+          "id": "MeaQ6478TRtZgXzD",
+          "name": "OpenRouter account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase Vector Store": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings Google Gemini": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Supabase Vector Store",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "nodeGroups": [],
+  "pinData": {},
+  "versionId": "0da9c16c-5054-4e99-b4c7-149fd2cce608",
+  "activeVersionId": null,
+  "versionCounter": 37,
+  "triggerCount": 0,
+  "sourceWorkflowId": null,
+  "tags": [],
+  "shared": [
+    {
+      "updatedAt": "2026-09-22T12:18:36.702Z",
+      "createdAt": "2026-09-22T12:18:36.702Z",
+      "role": "workflow:owner",
+      "workflowId": "EFbYGy5B1hd57VSr",
+      "projectId": "yD9Q2XWwnbezUeaJ",
+      "project": {
+        "updatedAt": "2026-09-04T11:12:03.759Z",
+        "createdAt": "2026-09-02T17:48:42.979Z",
+        "id": "yD9Q2XWwnbezUeaJ",
+        "name": "Youssef Kandil <youssefkandilmain@gmail.com>",
+        "type": "personal",
+        "icon": null,
+        "description": null,
+        "customTelemetryTags": [],
+        "creatorId": "62866307-32a1-4aed-bd25-6f4705f7df05"
+      }
+    }
+  ],
+  "versionMetadata": {
+    "name": null,
+    "description": null
+  }
+}

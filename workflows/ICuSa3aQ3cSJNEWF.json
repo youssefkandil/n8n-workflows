@@ -1,0 +1,168 @@
+{
+  "updatedAt": "2026-09-04T15:24:33.000Z",
+  "createdAt": "2026-09-04T13:08:12.091Z",
+  "id": "ICuSa3aQ3cSJNEWF",
+  "name": "chatbot telegram",
+  "description": null,
+  "active": true,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.5,
+      "position": [
+        -240,
+        16
+      ],
+      "id": "ed37e12a-7629-4bcb-b459-566eefd1cddd",
+      "name": "Telegram Trigger",
+      "webhookId": "7853ac1f-6878-433f-96ea-229d03294f01",
+      "credentials": {
+        "telegramApi": {
+          "id": "hu3LdfUAO6W47dSD",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.message.text }}",
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.9,
+      "position": [
+        -16,
+        -64
+      ],
+      "id": "a0a41650-93f8-4e75-a434-cc9f83f54ce5",
+      "name": "Basic LLM Chain"
+    },
+    {
+      "parameters": {
+        "model": "openrouter/free",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        160,
+        112
+      ],
+      "id": "79e152df-c705-4d28-b0aa-9eb4c2b5ff40",
+      "name": "OpenRouter Chat Model",
+      "credentials": {
+        "openRouterApi": {
+          "id": "MeaQ6478TRtZgXzD",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.from.id }}",
+        "text": "={{ $json.text }}",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        352,
+        -64
+      ],
+      "id": "bf54822a-8f1f-4ffb-a83b-a2403c3c542b",
+      "name": "Send a text message",
+      "webhookId": "9ee3785e-5a09-426b-a6c0-ffc8b506c115",
+      "credentials": {
+        "telegramApi": {
+          "id": "hu3LdfUAO6W47dSD",
+          "name": "Telegram account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "nodeGroups": [],
+  "pinData": {},
+  "versionId": "7fff42c8-df96-40ef-9fd4-086827cf56f9",
+  "activeVersionId": "7fff42c8-df96-40ef-9fd4-086827cf56f9",
+  "versionCounter": 36,
+  "triggerCount": 1,
+  "sourceWorkflowId": null,
+  "tags": [],
+  "shared": [
+    {
+      "updatedAt": "2026-09-04T13:08:12.100Z",
+      "createdAt": "2026-09-04T13:08:12.100Z",
+      "role": "workflow:owner",
+      "workflowId": "ICuSa3aQ3cSJNEWF",
+      "projectId": "yD9Q2XWwnbezUeaJ",
+      "project": {
+        "updatedAt": "2026-09-04T11:12:03.759Z",
+        "createdAt": "2026-09-02T17:48:42.979Z",
+        "id": "yD9Q2XWwnbezUeaJ",
+        "name": "Youssef Kandil <youssefkandilmain@gmail.com>",
+        "type": "personal",
+        "icon": null,
+        "description": null,
+        "customTelemetryTags": [],
+        "creatorId": "62866307-32a1-4aed-bd25-6f4705f7df05"
+      }
+    }
+  ],
+  "versionMetadata": {
+    "name": "chat bot telegram",
+    "description": ""
+  }
+}

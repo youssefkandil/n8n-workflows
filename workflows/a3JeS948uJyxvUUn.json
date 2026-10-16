@@ -1,0 +1,109 @@
+{
+  "updatedAt": "2026-10-16T21:04:16.000Z",
+  "createdAt": "2026-10-16T20:53:21.335Z",
+  "id": "a3JeS948uJyxvUUn",
+  "name": "[TEMP] Create AI Content Factory Database",
+  "description": "One-off helper that creates the AI Content Factory Database spreadsheet. Safe to archive after use.",
+  "active": false,
+  "isArchived": true,
+  "nodes": [
+    {
+      "id": "e540e9af-d535-48cc-9609-77ab552b9118",
+      "name": "Manual Start",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "a94b4d34-23e7-4ac7-aaa8-f3a98bccd985",
+      "name": "Create AI Content Factory Database",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        224,
+        0
+      ],
+      "parameters": {
+        "resource": "spreadsheet",
+        "operation": "create",
+        "authentication": "oAuth2",
+        "title": "AI Content Factory Database",
+        "sheetsUi": {
+          "sheetValues": [
+            {
+              "title": "Content Requests"
+            },
+            {
+              "title": "Content Revisions"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "P5Y1162j3UJ8KQFb",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Manual Start": {
+      "main": [
+        [
+          {
+            "node": "Create AI Content Factory Database",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": true
+  },
+  "staticData": null,
+  "meta": {
+    "aiBuilderAssisted": true,
+    "builderVariant": "mcp"
+  },
+  "nodeGroups": [],
+  "pinData": null,
+  "versionId": "afed1c7f-ba94-4aa3-8685-a3dda821b029",
+  "activeVersionId": null,
+  "versionCounter": 1,
+  "triggerCount": 0,
+  "sourceWorkflowId": null,
+  "tags": [],
+  "shared": [
+    {
+      "updatedAt": "2026-10-16T20:53:21.339Z",
+      "createdAt": "2026-10-16T20:53:21.339Z",
+      "role": "workflow:owner",
+      "workflowId": "a3JeS948uJyxvUUn",
+      "projectId": "yD9Q2XWwnbezUeaJ",
+      "project": {
+        "updatedAt": "2026-09-04T11:12:03.759Z",
+        "createdAt": "2026-09-02T17:48:42.979Z",
+        "id": "yD9Q2XWwnbezUeaJ",
+        "name": "Youssef Kandil <youssefkandilmain@gmail.com>",
+        "type": "personal",
+        "icon": null,
+        "description": null,
+        "customTelemetryTags": [],
+        "creatorId": "62866307-32a1-4aed-bd25-6f4705f7df05"
+      }
+    }
+  ],
+  "versionMetadata": {
+    "name": null,
+    "description": null
+  }
+}

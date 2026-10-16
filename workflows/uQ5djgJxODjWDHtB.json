@@ -1,0 +1,381 @@
+{
+  "updatedAt": "2026-09-18T17:14:57.211Z",
+  "createdAt": "2026-09-18T16:52:44.712Z",
+  "id": "uQ5djgJxODjWDHtB",
+  "name": "Customer Data Automation",
+  "description": "Form trigger collects customer data, stores it in an n8n Data Table (Customer Database), appends a row to Google Sheets, builds an HTML summary table, and emails it via Gmail.",
+  "active": false,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "New Customer Data",
+        "formDescription": "Enter the new customer record details.",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Customer Name",
+              "fieldName": "customerName",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Phone",
+              "fieldName": "phone",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Email",
+              "fieldType": "email",
+              "fieldName": "email",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Address",
+              "fieldName": "address",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Date",
+              "fieldType": "date",
+              "fieldName": "date",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "id": "cd2c57fd-ed53-4334-a86c-bdcf9ff008c5",
+      "name": "New Customer Form",
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.6,
+      "position": [
+        0,
+        0
+      ],
+      "webhookId": "7bdc6887-67fb-48fd-8d05-8ce37caa62d3"
+    },
+    {
+      "parameters": {
+        "dataTableId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "ItqKcsg0rC09jL0J",
+          "cachedResultName": "Customer Database"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "customerName": "={{ $json.customerName }}",
+            "phone": "={{ $json.phone }}",
+            "email": "={{ $json.email }}",
+            "address": "={{ $json.address }}",
+            "date": "={{ $json.date }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "customerName",
+              "displayName": "customerName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "phone",
+              "displayName": "phone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "email",
+              "displayName": "email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "address",
+              "displayName": "address",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "date",
+              "displayName": "date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "id": "d79bbead-43ab-4338-af2c-0b75cb4a7d83",
+      "name": "Customer Database",
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        224,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1wHs1yk3DDgtTWkGRNEFA7mCccg2HA3yWjQ3Ey-2RKjQ",
+          "mode": "list",
+          "cachedResultName": "Customer Data",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1wHs1yk3DDgtTWkGRNEFA7mCccg2HA3yWjQ3Ey-2RKjQ/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1wHs1yk3DDgtTWkGRNEFA7mCccg2HA3yWjQ3Ey-2RKjQ/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "ID": "={{ $json.id }}",
+            "Customer Name": "={{ $json.customerName }}",
+            "Phone": "={{ $json.phone }}",
+            "Gmail": "={{ $json.email }}",
+            "Address": "={{ $json.address }}",
+            "Date": "={{ $json.date }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "ID",
+              "displayName": "ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Customer Name",
+              "displayName": "Customer Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Phone",
+              "displayName": "Phone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Gmail",
+              "displayName": "Gmail",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Address",
+              "displayName": "Address",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Date",
+              "displayName": "Date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "id": "76368284-1ef3-4f74-9a85-fb2b9e7b11a9",
+      "name": "Google Sheets",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        448,
+        0
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "P5Y1162j3UJ8KQFb",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const form = $(\"New Customer Form\").item.json;\n\nfunction esc(val) {\n  if (val === undefined || val === null || val === \"\") return \"N/A\";\n  return String(val)\n    .replace(/&/g, \"&amp;\")\n    .replace(/</g, \"&lt;\")\n    .replace(/>/g, \"&gt;\")\n    .replace(/\"/g, \"&quot;\");\n}\n\nconst rows = [\n  [\"Customer Name\", form.customerName],\n  [\"Phone\", form.phone],\n  [\"Email\", form.email],\n  [\"Address\", form.address],\n  [\"Date\", form.date]\n];\n\nlet bodyRows = \"\";\nfor (const pair of rows) {\n  const label = pair[0];\n  const value = pair[1];\n  bodyRows += \"<tr><td style=\\\"padding:8px;border:1px solid #ddd;font-weight:bold;background-color:#f5f5f5;\\\">\" + esc(label) + \"</td><td style=\\\"padding:8px;border:1px solid #ddd;\\\">\" + esc(value) + \"</td></tr>\";\n}\n\nconst htmlTable = \"<table style=\\\"border-collapse:collapse;width:100%;max-width:500px;font-family:Arial,sans-serif;font-size:14px;\\\">\" +\n  \"<thead><tr><th colspan=\\\"2\\\" style=\\\"padding:10px;border:1px solid #ddd;background-color:#4a90d9;color:#ffffff;text-align:left;\\\">New Customer Data</th></tr></thead>\" +\n  \"<tbody>\" + bodyRows + \"</tbody></table>\";\n\nreturn [{ json: { htmlTable: htmlTable } }];"
+      },
+      "id": "0a630e69-b8bc-4121-8a5d-9b1ab9f5f121",
+      "name": "Build HTML Table",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        672,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "sendTo": "youssefkandil872@gmail.com",
+        "subject": "New Customer Data",
+        "message": "=<h2>New Customer Data</h2>\n{{ $json.htmlTable }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "id": "cb63d98a-3d5e-44ed-8887-2a2970c37f99",
+      "name": "Gmail",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        896,
+        0
+      ],
+      "webhookId": "42aad9da-ee4b-4ad0-acc1-6bfa9e1ffae6",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "JicKT2LRmsrfthYo",
+          "name": "Gmail account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "New Customer Form": {
+      "main": [
+        [
+          {
+            "node": "Customer Database",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Customer Database": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets": {
+      "main": [
+        [
+          {
+            "node": "Build HTML Table",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build HTML Table": {
+      "main": [
+        [
+          {
+            "node": "Gmail",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": true,
+    "binaryMode": "separate"
+  },
+  "staticData": null,
+  "meta": {
+    "aiBuilderAssisted": true,
+    "builderVariant": "mcp",
+    "templateCredsSetupCompleted": true
+  },
+  "nodeGroups": [],
+  "pinData": {},
+  "versionId": "36b84c35-ad8f-4559-af5a-31c8e14b6b82",
+  "activeVersionId": null,
+  "versionCounter": 21,
+  "triggerCount": 0,
+  "sourceWorkflowId": null,
+  "tags": [],
+  "shared": [
+    {
+      "updatedAt": "2026-09-18T16:52:44.717Z",
+      "createdAt": "2026-09-18T16:52:44.717Z",
+      "role": "workflow:owner",
+      "workflowId": "uQ5djgJxODjWDHtB",
+      "projectId": "yD9Q2XWwnbezUeaJ",
+      "project": {
+        "updatedAt": "2026-09-04T11:12:03.759Z",
+        "createdAt": "2026-09-02T17:48:42.979Z",
+        "id": "yD9Q2XWwnbezUeaJ",
+        "name": "Youssef Kandil <youssefkandilmain@gmail.com>",
+        "type": "personal",
+        "icon": null,
+        "description": null,
+        "customTelemetryTags": [],
+        "creatorId": "62866307-32a1-4aed-bd25-6f4705f7df05"
+      }
+    }
+  ],
+  "versionMetadata": {
+    "name": null,
+    "description": null
+  }
+}
